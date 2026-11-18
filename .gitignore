@@ -41,3 +41,9 @@ node_modules/
 
 # Data
 data/
+!data/.gitkeep
+!data/docs/.gitkeep
+
+# Agent Context & Planning Notes
+context/
+
