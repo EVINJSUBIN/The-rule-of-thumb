@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Rule of Thumb | Hack Club Phantom</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #2ea043;
+      --accent-glow: rgba(46, 160, 67, 0.25);
+      --text: #c9d1d9;
+      --text-bright: #ffffff;
+      --text-muted: #8b949e;
+      --code-bg: #090d13;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      background: var(--card-bg);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #2ea043, #58a6ff, #bc8cff);
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(88, 166, 255, 0.15);
+      color: #58a6ff;
+      border: 1px solid rgba(88, 166, 255, 0.4);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.4rem;
+      color: var(--text-bright);
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+    .tagline {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .manifesto {
+      background: var(--code-bg);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      color: var(--text-bright);
+      font-style: italic;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .card h3 {
+      color: var(--text-bright);
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-pill {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .stat-pill strong {
+      color: var(--text-bright);
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">👻 Hack Club Phantom Project</div>
+      <h1>The Rule of Thumb</h1>
+      <div class="tagline">// Reclaim your coding aura. Stop the AI slop.</div>
+      
+      <div class="manifesto">
+        "Coding is being replaced by AI, but we will still code manually to prove our passions. In this project I will try my max to code by hand because it's a challenge by me."
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-pill">🎯 Goal: <strong>40 Hours Hand-Coded</strong></div>
+        <div class="stat-pill">🤖 AI Written Code: <strong>0%</strong></div>
+        <div class="stat-pill">⚡ Architecture: <strong>Tauri + Rust + Flask</strong></div>
+        <div class="stat-pill">📡 Mode: <strong>100% Offline Capable</strong></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>Offline Docs Manager</h3>
+        <p>Built-in package manager for DevDocs. Download API docsets on demand; browse and search with zero internet connection.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>AI Usage Capper & Audit</h3>
+        <p>An MCP server that tracks LLM usage, warns against over-reliance, and enforces strict hard caps on AI assistance.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">😈</div>
+        <h3>Sarcastic AI Mentor</h3>
+        <p>An AI that explains architectures and points you to documentation, but explicitly refuses to write code for you.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">⏱️</div>
+        <h3>Reliable Time Tracker</h3>
+        <p>Keystroke and active window session tracker stored in local SQLite without the synchronization glitches of cloud trackers.</p>
+      </div>
+    </div>
+
+    <footer>
+      Built with ❤️ for <strong>Hack Club Phantom</strong> · <a href="../docs/AI_DECLARATION.md">AI Declaration</a> · Hand-typed keystroke by keystroke.
+    </footer>
+  </div>
+</body>
+</html>
