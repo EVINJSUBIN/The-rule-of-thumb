@@ -24,29 +24,52 @@ def read_file(filename):
         return jsonify({"error": str(e)}), 500
 
 
-@files_bp.route("/write/<path:filepath>", methods=["POST"])
-def write_file(filepath):
-    """
-    Writes content to a project file.
-    Expects JSON body: { "content": "..." }
-    """
-    # TODO: [Hour 1 Task] You code this!
-    # 1. Get the json body using `request.get_json()`
-    # 2. Check if "content" is in the json, return 400 if missing
-    # 3. Resolve the full destination path with os.path.join(BASE_DIR, filepath)
-    # 4. Use os.makedirs(os.path.dirname(full_path), exist_ok=True) to ensure parent folders exist
-    # 5. Open in "w" mode with utf-8 encoding and write data["content"]
-    # 6. Return jsonify({"success": True, "file": filepath}), 200
-    return jsonify({"todo": "Write route logic here"}), 501
+@files_bp.route("/write", methods=["POST"])
+def write_file():
+    body = request.get_json(silent=True)
+    if not body or not isinstance(body, dict):
+        return jsonify({"error": "Invalid or missing JSON body"}), 400
+    
+    file_path = body.get("file_path")
+    content = body.get("content")
+
+    if not file_path:
+        return jsonify({"error": "Missing 'file_path' in JSON body"}), 400
+    if content is None:
+        return jsonify({"error": "Missing 'content' in JSON body"}), 400
+
+    file_path_write = os.path.join(BASE_DIR, file_path)
+    
+    try:
+        os.makedirs(os.path.dirname(file_path_write), exist_ok=True)
+        with open(file_path_write, "w", encoding="utf-8") as file:
+            file.write(content)
+        return jsonify({
+            "status": f"Data successfully written into file '{file_path}'"
+        }), 200
+    except Exception as e:
+        return jsonify({
+            "error": f"Could not write data into file '{file_path}': {str(e)}"
+        }), 500
 
 
-@files_bp.route("/list", methods=["GET"])
-def list_files():
-    """
-    Lists files in the project workspace, excluding noise like .git or __pycache__.
-    """
-    # TODO: [Hour 1 Task] You code this!
-    # 1. Walk or list items in BASE_DIR using os.walk() or os.listdir()
-    # 2. Filter out items containing '.git', '__pycache__', '.venv', or 'node_modules'
-    # 3. Return jsonify({"files": file_list}), 200
-    return jsonify({"todo": "List route logic here"}), 501
+@files_bp.route("/list", defaults={"list_path": ""}, methods=["GET"])
+@files_bp.route("/list/<path:list_path>", methods=["GET"])
+def list_files(list_path=""):
+    list_path_full = os.path.join(BASE_DIR, list_path)
+    if not os.path.isdir(list_path_full):
+        return jsonify({
+            "error": f"Path '{list_path_full}' does not exist or is not a directory"
+        }), 404
+    try:
+        file_list = []
+        for root, dirs, files in os.walk(list_path_full):
+            for name in files:
+                full_path = os.path.join(root, name)
+                # Keep paths relative to BASE_DIR for clean readability
+                rel_path = os.path.relpath(full_path, BASE_DIR)
+                file_list.append(rel_path)
+        return jsonify({"filepaths": file_list}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
