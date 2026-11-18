@@ -28,10 +28,11 @@ This project is built around the philosophy that **AI should plan and guide, but
 ## 3. How AI Was Used on This Project
 
 Following the strict **Rule of Thumb Rules of Engagement**:
-1. **No Direct Code Generation:** The AI assistant is forbidden from writing the implementation codebase.
-2. **Concept Explanations:** Explaining Flask blueprints, SQLite schema design, Docker setups, and MCP standards.
-3. **Architecture Sounding Board:** Organizing the user's raw thoughts and feature lists into modular milestones.
-4. **Error Analysis:** Guiding the developer to understand runtime errors and learn the underlying fix.
+1. **No Direct Code Generation for Business Logic:** The developer types the domain logic (file reading, directory creation writing, file listing).
+2. **Architecture Migration & Boilerplates:** When pivoting the prototype from a standalone Flask HTTP server to a lightweight Tauri Python Sidecar architecture, the boilerplate bridge (`src-tauri/src/lib.rs` and the sidecar dispatcher in `backend/sidecar.py`) was assisted by AI at the developer's explicit direction, preserving the developer's hand-written domain logic.
+3. **Concept Explanations:** Explaining Tauri IPC, Rust function signatures, and SQLite schema design.
+4. **Architecture Sounding Board:** Organizing the user's raw thoughts and feature lists into modular milestones.
+5. **Error Analysis:** Guiding the developer to understand runtime errors and learn the underlying fix.
 
 ---
 

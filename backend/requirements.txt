@@ -1,2 +1,4 @@
-flask>=3.0.0
+# Python Sidecar Requirements
+# Note: The sidecar runs primarily on Python 3 Standard Library (os, sys, json, sqlite3)
+# Additional helpers for docset downloads:
 requests>=2.31.0
