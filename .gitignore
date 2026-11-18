@@ -39,6 +39,10 @@ desktop.ini
 node_modules/
 *.vsix
 
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/schemas/
+
 # Data
 data/
 !data/.gitkeep
