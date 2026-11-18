@@ -21,6 +21,10 @@ def get_the_contents(file_name):
     except Exception as e:
         return{"error":str(e)},500
 
-
+@app.route("/Write/<file_path>")
+def write_to_file(file_path):
+    file_path=file_path.replace(" ",'/')
+    print(file_path)
 if __name__ == '__main__':
     app.run(debug=True)
+
