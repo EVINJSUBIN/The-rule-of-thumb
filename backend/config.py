@@ -15,3 +15,4 @@ DEVDOCS_CDN_BASE = "https://documents.devdocs.io"
 # Ensure runtime directories exist
 os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(DOCS_DIR, exist_ok=True)
+## ahh hackclub if your are seeing this my back is hurting while i write this i need to get pc grant and get a new chair my posture is beign bad afte this 3hr strech 
