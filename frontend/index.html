@@ -184,34 +184,103 @@
       </div>
     </div>
 
-    <!-- 4. AI AUDIT VIEW -->
+    <!-- 4. AI AUDIT VIEW (v0 Minimalist Dark Aesthetic) -->
     <div id="view-audit" class="tab-view">
-      <div class="banner" style="padding: 1.5rem; margin-bottom: 1.5rem;">
-        <h2 style="color: var(--text-bright); margin-bottom: 0.25rem;">AI Reliance Audit & Monitoring</h2>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">
-          Every interaction with LLMs or MCP servers is logged into SQLite <code>ai_logs</code> to verify human code integrity for Hack Club.
-        </p>
-      </div>
+      
+      <div class="v0-chat-wrapper">
+        <h1 class="v0-chat-header">What can I help you ship?</h1>
+        <div style="text-align: center; font-size: 0.85rem; color: #737373; margin-top: -0.5rem; margin-bottom: 0.5rem;">
+          Sarcastic AI Mentor & MCP Audit Logger // 0% code generation, 100% guidance
+        </div>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3 style="color: var(--text-bright); margin-bottom: 1rem;">Manual Log Entry (MCP Simulator)</h3>
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <input type="text" id="audit-tool-name" class="input" placeholder="Tool name (e.g. claude, gpt, sidecar)" />
-            <input type="text" id="audit-action" class="input" placeholder="Action (e.g. architecture_review, error_explain)" />
-            <input type="text" id="audit-notes" class="input" placeholder="Notes (brief summary of what was asked)" />
-            <button class="btn btn-primary" onclick="submitAuditLog()">Record Audit Log</button>
+        <!-- v0 Chat Input Box -->
+        <div class="v0-chat-box">
+          <textarea
+            id="audit-notes"
+            class="v0-textarea"
+            placeholder="Ask the Sarcastic Mentor for architectural advice, or describe your prompt to log it..."
+            rows="2"
+            onkeydown="handleAuditKeydown(event)"
+            oninput="handleAuditInput(this)"
+          ></textarea>
+
+          <div class="v0-toolbar">
+            <div class="v0-toolbar-left">
+              <label style="font-size: 0.75rem; color: #71717a; margin-right: 4px;">Tool:</label>
+              <select id="audit-tool-name" class="v0-pill-select">
+                <option value="sarcastic_mentor">🤖 Mentor (Local)</option>
+                <option value="gemini_cli">⚡ Gemini CLI</option>
+                <option value="claude_code">🧠 Claude Code</option>
+                <option value="cursor">💻 Cursor / Copilot</option>
+                <option value="sidecar">🐍 Python Sidecar</option>
+              </select>
+
+              <label style="font-size: 0.75rem; color: #71717a; margin-left: 6px; margin-right: 4px;">Action:</label>
+              <select id="audit-action" class="v0-pill-select">
+                <option value="architecture_review">📐 Architecture Review</option>
+                <option value="debug_guidance">🐛 Debug Guidance</option>
+                <option value="documentation_lookup">📖 Doc Lookup</option>
+                <option value="refactor_plan">🛠️ Refactor Plan</option>
+              </select>
+            </div>
+
+            <div class="v0-toolbar-right">
+              <button
+                type="button"
+                id="v0-submit-btn"
+                class="v0-send-btn"
+                title="Log audit & ask Mentor (Enter)"
+                onclick="submitAuditLog()"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="card">
-          <h3 style="color: var(--text-bright); margin-bottom: 0.5rem;">Audit Compliance Summary</h3>
-          <div style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.8;">
-            <div>• Target 40h Coding: <strong style="color: var(--accent);">Active</strong></div>
-            <div>• Direct Code Gen: <strong style="color: var(--accent);">Prohibited (0%)</strong></div>
-            <div>• Database: <code>data/ruleofthumb.db</code></div>
-            <div>• Status: <strong style="color: var(--accent-blue);">Reviewer-Ready Audit Trail</strong></div>
+        <!-- Quick Action Pills -->
+        <div class="v0-actions-grid">
+          <button type="button" class="v0-action-btn" onclick="quickFillPrompt('Explain system architecture without writing any code')">
+            <span>📐 Architecture Hints</span>
+          </button>
+          <button type="button" class="v0-action-btn" onclick="quickFillPrompt('Why is my Rust Tauri command returning E0255?')">
+            <span>🐛 Rust Compiler Help</span>
+          </button>
+          <button type="button" class="v0-action-btn" onclick="quickFillPrompt('Lookup sqlite3 transaction syntax for Python sidecar')">
+            <span>📖 DevDocs Query</span>
+          </button>
+          <button type="button" class="v0-action-btn" onclick="quickFillPrompt('Review my compliance with Phantom 40h human coding rules')">
+            <span>🛡️ Check 0% AI Cap</span>
+          </button>
+          <button type="button" class="v0-action-btn" onclick="quickFillPrompt('Log manual AI prompt session for Hack Club verification')">
+            <span>📝 Log Session</span>
+          </button>
+        </div>
+
+        <!-- Mentor Response Output Area -->
+        <div id="mentor-response-box" class="v0-mentor-reply">
+          <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent); margin-bottom: 0.4rem; font-weight: 700;">
+            ⚡ SARCASTIC MENTOR SAYS:
           </div>
+          <div id="mentor-response-text" style="line-height: 1.6;"></div>
+        </div>
+      </div>
+
+      <!-- Compliance Banner & Metrics -->
+      <div class="card" style="margin-bottom: 1.5rem; background: #121824; border-color: #1e293b;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h4 style="color: var(--text-bright); margin-bottom: 0.25rem;">Audit Compliance Status</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              All prompts and tool invocations are permanently committed to SQLite <code>ai_logs</code> to prove 0% AI slop.
+            </p>
+          </div>
+          <span class="badge-pill" style="color: var(--accent); border-color: var(--accent); background: rgba(16, 185, 129, 0.1); margin: 0;">
+            POLICY: 0% CODE GEN ENFORCED
+          </span>
         </div>
       </div>
 

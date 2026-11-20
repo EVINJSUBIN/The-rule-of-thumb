@@ -1,8 +1,170 @@
-/* AI Audit Component Styles */
+/* AI Audit & Mentor Component Styles (v0 Minimalist Dark Aesthetic) */
+
+.v0-chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto 2rem;
+  gap: 1rem;
+}
+
+.v0-chat-header {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.v0-chat-box {
+  position: relative;
+  background: #171717;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.v0-chat-box:focus-within {
+  border-color: #404040;
+  box-shadow: 0 8px 30px -5px rgba(0, 0, 0, 0.7);
+}
+
+.v0-textarea {
+  width: 100%;
+  padding: 1rem 1.25rem 0.5rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: none;
+  min-height: 70px;
+}
+
+.v0-textarea::placeholder {
+  color: #737373;
+  font-size: 0.92rem;
+}
+
+.v0-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.v0-toolbar-left,
+.v0-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.v0-pill-select {
+  background: transparent;
+  border: 1px dashed #3f3f46;
+  color: #a1a1aa;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.v0-pill-select:hover {
+  background: #27272a;
+  border-color: #52525b;
+  color: #ffffff;
+}
+
+.v0-pill-select option {
+  background: #18181b;
+  color: #ffffff;
+}
+
+.v0-send-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #27272a;
+  color: #a1a1aa;
+  border: 1px solid #3f3f46;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.v0-send-btn.active,
+.v0-send-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.v0-send-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.v0-actions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.v0-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #171717;
+  border: 1px solid #262626;
+  border-radius: 9999px;
+  color: #a3a3a3;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.v0-action-btn:hover {
+  background: #262626;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+/* AI Mentor Bubble */
+.v0-mentor-reply {
+  background: #171717;
+  border: 1px solid #262626;
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  color: #e5e5e5;
+  font-size: 0.9rem;
+  display: none;
+}
+
+/* Audit Table Component */
 .table-container {
   overflow-x: auto;
   border-radius: 10px;
   border: 1px solid var(--border);
+  margin-top: 1rem;
 }
 
 table {
