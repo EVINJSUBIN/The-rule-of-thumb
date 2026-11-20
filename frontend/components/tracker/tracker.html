@@ -1,0 +1,17 @@
+<!-- Coding Time Tracker View Component -->
+<div id="view-tracker" class="tab-view">
+  <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 2.5rem;">
+    <div class="badge-pill" style="color: var(--accent); border-color: var(--accent);">OFFLINE SESSION TRACKER</div>
+    <h2 style="color: var(--text-bright); margin-top: 0.5rem;">Live Coding Session</h2>
+    <div class="timer-display" id="timer-display">00:00:00</div>
+    
+    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem;">
+      <button class="btn btn-primary" id="timer-toggle-btn" onclick="toggleTimer()">▶ Start Session</button>
+      <button class="btn btn-secondary" onclick="resetTimer()">⏹ Reset</button>
+    </div>
+
+    <p style="font-size: 0.85rem; color: var(--text-muted);">
+      Records active coding time offline. When stopped, time will log directly into local SQLite <code>coding_sessions</code>.
+    </p>
+  </div>
+</div>

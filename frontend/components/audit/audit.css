@@ -1,0 +1,32 @@
+/* AI Audit Component Styles */
+.table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  text-align: left;
+}
+
+th {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}

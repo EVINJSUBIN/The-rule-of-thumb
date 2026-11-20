@@ -1,0 +1,24 @@
+<!-- Workspace Files View Component -->
+<div id="view-files" class="tab-view">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+    <div>
+      <h2 style="color: var(--text-bright);">Workspace File Explorer</h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted);">Direct file access through Python sidecar bridge</p>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="loadWorkspaceFiles()">🔄 Refresh Tree</button>
+  </div>
+
+  <div class="file-layout">
+    <div class="file-tree" id="file-tree-container">
+      <div style="color: var(--text-muted); font-size: 0.85rem;">Scanning workspace files...</div>
+    </div>
+
+    <div class="editor-pane">
+      <div class="editor-header">
+        <span id="current-file-label" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-blue);">No file opened</span>
+        <button class="btn btn-primary btn-sm" onclick="saveCurrentFile()">💾 Save File</button>
+      </div>
+      <textarea id="file-editor-textarea" class="editor-textarea" placeholder="Select a file from the left to read and edit..."></textarea>
+    </div>
+  </div>
+</div>

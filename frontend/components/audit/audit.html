@@ -1,0 +1,49 @@
+<!-- AI Audit View Component -->
+<div id="view-audit" class="tab-view">
+  <div class="banner" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+    <h2 style="color: var(--text-bright); margin-bottom: 0.25rem;">AI Reliance Audit & Monitoring</h2>
+    <p style="font-size: 0.88rem; color: var(--text-muted);">
+      Every interaction with LLMs or MCP servers is logged into SQLite <code>ai_logs</code> to verify human code integrity for Hack Club.
+    </p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="color: var(--text-bright); margin-bottom: 1rem;">Manual Log Entry (MCP Simulator)</h3>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <input type="text" id="audit-tool-name" class="input" placeholder="Tool name (e.g. claude, gpt, sidecar)" />
+        <input type="text" id="audit-action" class="input" placeholder="Action (e.g. architecture_review, error_explain)" />
+        <input type="text" id="audit-notes" class="input" placeholder="Notes (brief summary of what was asked)" />
+        <button class="btn btn-primary" onclick="submitAuditLog()">Record Audit Log</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="color: var(--text-bright); margin-bottom: 0.5rem;">Audit Compliance Summary</h3>
+      <div style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.8;">
+        <div>• Target 40h Coding: <strong style="color: var(--accent);">Active</strong></div>
+        <div>• Direct Code Gen: <strong style="color: var(--accent);">Prohibited (0%)</strong></div>
+        <div>• Database: <code>data/ruleofthumb.db</code></div>
+        <div>• Status: <strong style="color: var(--accent-blue);">Reviewer-Ready Audit Trail</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="color: var(--text-bright); margin: 1.5rem 0 0.75rem;">Recent AI Logs</h3>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Timestamp</th>
+          <th>Tool</th>
+          <th>Action</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="audit-table-body">
+        <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Loading audit logs...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

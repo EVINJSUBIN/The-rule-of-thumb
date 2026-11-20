@@ -1,0 +1,49 @@
+<!-- Offline Docs View Component -->
+<div id="view-docs" class="tab-view">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+    <div>
+      <h2 style="color: var(--text-bright);">Offline Documentation Engine</h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted);">DevDocs CDN packages cached locally in <code>data/docs/</code></p>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="loadInstalledDocs()">🔄 Refresh</button>
+  </div>
+
+  <div class="docs-layout">
+    <!-- Sidebar -->
+    <div class="docs-sidebar">
+      <div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Installed Docsets</div>
+        <div id="installed-docs-list" style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-size: 0.82rem; color: var(--text-muted);">Loading installed docs...</div>
+        </div>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--border);" />
+
+      <div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Download New Docset</div>
+        <input type="text" id="doc-slug-input" class="input" placeholder="e.g. python~3.12, rust, css" style="margin-bottom: 8px;" />
+        <button class="btn btn-primary btn-sm" style="width: 100%;" onclick="downloadSelectedDoc()">📥 Download to Local Cache</button>
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--border);" />
+
+      <div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Search in Active Docset</div>
+        <input type="text" id="doc-search-input" class="input" placeholder="Search keywords..." oninput="debounceDocSearch()" />
+        <div id="doc-search-results" class="search-results-list"></div>
+      </div>
+    </div>
+
+    <!-- Viewer Pane -->
+    <div class="docs-viewer" id="doc-viewer-pane">
+      <div style="text-align: center; color: var(--text-muted); margin: auto;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📖</div>
+        <h3>No Document Selected</h3>
+        <p style="font-size: 0.88rem; max-width: 320px; margin: 0.5rem auto;">
+          Select an installed docset on the left or search for an API keyword to view documentation offline.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+/* Workspace Files Component Styles */
+.file-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+  min-height: 520px;
+}
+
+@media (max-width: 800px) {
+  .file-layout { grid-template-columns: 1fr; }
+}
+
+.file-tree {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+.file-tree-item {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+.file-tree-item:hover, .file-tree-item.active {
+  color: var(--text-bright);
+  background: rgba(255, 255, 255, 0.06);
+}
+.file-tree-item.active {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.editor-pane {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editor-header {
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editor-textarea {
+  flex: 1;
+  width: 100%;
+  height: 480px;
+  background: #070a0f;
+  color: #e2e8f0;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  resize: vertical;
+  line-height: 1.6;
+}
