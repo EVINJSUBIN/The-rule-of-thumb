@@ -10,6 +10,7 @@ import os
 import json
 import urllib.request
 import sqlite3
+from datetime import datetime,timedelta
 # Root project directory
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -278,7 +279,45 @@ def handle_docs_get(slug, doc_path):
     except Exception as e:
         return {"error": str(e)}
 
+def handle_session_record(duration_seconds, project_name="Project 1"):
+    try:
+        duration_seconds = int(duration_seconds)
+    except (TypeError, ValueError):
+        return {"error": "duration_seconds must be an integer"}
+    if duration_seconds < 0:
+        return {"error": "duration_seconds must be zero or greater"}
 
+    end_time = datetime.now()
+    start_time = end_time - timedelta(seconds=duration_seconds)
+
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO coding_sessions
+                (start_time, end_time, duration_seconds, project_name)
+            VALUES (?, ?, ?, ?)
+            """,
+            (
+                start_time.strftime("%Y-%m-%d %H:%M:%S"),
+                end_time.strftime("%Y-%m-%d %H:%M:%S"),
+                duration_seconds,
+                project_name,
+            )
+        )
+        conn.commit()
+        return {
+            "status": "ok",
+            "id": cursor.lastrowid,
+            "duration_seconds": duration_seconds,
+            "project_name": project_name,
+            "message": "Coding session logged successfully"
+        }
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        conn.close()
 # -------------------------------------------------------------
 # Dispatcher / CLI Entry Point
 # -------------------------------------------------------------
@@ -309,6 +348,11 @@ def process_command(cmd, payload):
         )
     elif cmd == "audit_stats":
         return handle_audit_stats()
+    elif cmd == "session_record":
+        return handle_session_record(
+            payload.get("duration_seconds"),
+            payload.get("project_name","Project 1")
+        )
     else:
         return {"error": f"Unknown command: '{cmd}'"}
 
@@ -348,6 +392,11 @@ def main():
                         "tool_name": sys.argv[2],
                         "action": sys.argv[3] if len(sys.argv) >= 4 else "",
                         "notes": sys.argv[4] if len(sys.argv) >= 5 else ""
+                    }
+                elif cmd == "session_record" and len(sys.argv) >= 3:
+                    payload = {
+                        "duration_seconds": sys.argv[2],
+                        "project_name": sys.argv[3] if len(sys.argv) >= 4 else "The Rule of Thumb"
                     }
                 else:
                     payload = {"arg": raw_arg}
