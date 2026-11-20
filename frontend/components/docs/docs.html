@@ -1,9 +1,9 @@
-<!-- Offline Docs View Component -->
+<!-- Offline Docs View Component (v0 / shadcn Minimalist Dark Aesthetic) -->
 <div id="view-docs" class="tab-view">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
     <div>
-      <h2 style="color: var(--text-bright);">Offline Documentation Engine</h2>
-      <p style="font-size: 0.88rem; color: var(--text-muted);">DevDocs CDN packages cached locally in <code>data/docs/</code></p>
+      <h2 style="color: #ffffff; font-weight: 700; letter-spacing: -0.3px;">Offline Documentation Engine</h2>
+      <p style="font-size: 0.85rem; color: #71717a;">DevDocs CDN packages cached locally in <code>data/docs/</code></p>
     </div>
     <button class="btn btn-secondary btn-sm" onclick="loadInstalledDocs()">🔄 Refresh</button>
   </div>
@@ -12,24 +12,24 @@
     <!-- Sidebar -->
     <div class="docs-sidebar">
       <div>
-        <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Installed Docsets</div>
+        <div style="font-size: 0.75rem; color: #71717a; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; font-family: var(--font-mono);">Installed Docsets</div>
         <div id="installed-docs-list" style="display: flex; flex-direction: column; gap: 6px;">
-          <div style="font-size: 0.82rem; color: var(--text-muted);">Loading installed docs...</div>
+          <div style="font-size: 0.82rem; color: #71717a;">Loading installed docs...</div>
         </div>
       </div>
 
-      <hr style="border: 0; border-top: 1px solid var(--border);" />
+      <hr style="border: 0; border-top: 1px solid #262626;" />
 
       <div>
-        <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Download New Docset</div>
+        <div style="font-size: 0.75rem; color: #71717a; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; font-family: var(--font-mono);">Download Docset</div>
         <input type="text" id="doc-slug-input" class="input" placeholder="e.g. python~3.12, rust, css" style="margin-bottom: 8px;" />
-        <button class="btn btn-primary btn-sm" style="width: 100%;" onclick="downloadSelectedDoc()">📥 Download to Local Cache</button>
+        <button class="btn btn-primary btn-sm" style="width: 100%;" onclick="downloadSelectedDoc()">📥 Download Cache</button>
       </div>
 
-      <hr style="border: 0; border-top: 1px solid var(--border);" />
+      <hr style="border: 0; border-top: 1px solid #262626;" />
 
       <div>
-        <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;">Search in Active Docset</div>
+        <div style="font-size: 0.75rem; color: #71717a; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; font-family: var(--font-mono);">Search Active Docset</div>
         <input type="text" id="doc-search-input" class="input" placeholder="Search keywords..." oninput="debounceDocSearch()" />
         <div id="doc-search-results" class="search-results-list"></div>
       </div>
@@ -37,11 +37,11 @@
 
     <!-- Viewer Pane -->
     <div class="docs-viewer" id="doc-viewer-pane">
-      <div style="text-align: center; color: var(--text-muted); margin: auto;">
+      <div style="text-align: center; color: #71717a; margin: auto;">
         <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📖</div>
-        <h3>No Document Selected</h3>
-        <p style="font-size: 0.88rem; max-width: 320px; margin: 0.5rem auto;">
-          Select an installed docset on the left or search for an API keyword to view documentation offline.
+        <h3 style="color: #ffffff; font-weight: 600;">No Document Selected</h3>
+        <p style="font-size: 0.85rem; max-width: 320px; margin: 0.5rem auto; line-height: 1.6;">
+          Select an installed docset on the left or search for an API symbol to view documentation offline.
         </p>
       </div>
     </div>

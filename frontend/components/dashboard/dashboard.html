@@ -1,9 +1,9 @@
-<!-- Dashboard View Component -->
+<!-- Dashboard View Component (v0 / shadcn Minimalist Dark Aesthetic) -->
 <div id="view-dashboard" class="tab-view active">
   <div class="banner">
-    <div class="badge-pill">👻 HACK CLUB PHANTOM PROJECT</div>
+    <div class="badge-pill info" style="margin-bottom: 1rem;">👻 HACK CLUB PHANTOM</div>
     <h1>The Rule of Thumb</h1>
-    <div class="tagline">// Reclaim your coding aura. Stop the AI slop.</div>
+    <div class="tagline">// Reclaim your coding aura. 0% AI code generation.</div>
     <div class="quote-box">
       "Coding is being replaced by AI, but we will still code manually to prove our passions. In this project I will try my max to code by hand because it's a challenge by me."
     </div>
@@ -13,59 +13,61 @@
     <div class="card">
       <div class="stat-label">
         <span>Coding Hours</span>
-        <span>🎯</span>
+        <span style="color: #71717a;">⏱</span>
       </div>
-      <div class="stat-value" id="stat-hours">13.0 <span style="font-size: 1rem; color: var(--text-muted);">/ 40h</span></div>
+      <div class="stat-value" id="stat-hours">13.0 <span style="font-size: 1rem; color: #71717a; font-weight: 400;">/ 40h</span></div>
       <div class="progress-track">
         <div class="progress-fill" id="stat-progress-bar" style="width: 32.5%;"></div>
       </div>
-      <div class="stat-desc">32.5% to Phantom Grant goal</div>
+      <div class="stat-desc">32.5% to Phantom Grant</div>
     </div>
 
     <div class="card">
       <div class="stat-label">
         <span>AI Tool Logs</span>
-        <span>🤖</span>
+        <span style="color: #71717a;">🤖</span>
       </div>
       <div class="stat-value" id="stat-ai-calls">0</div>
-      <div class="stat-desc">Recorded via SQLite audit</div>
+      <div class="stat-desc">SQLite audit events recorded</div>
     </div>
 
     <div class="card">
       <div class="stat-label">
-        <span>Installed Docs</span>
-        <span>📚</span>
+        <span>Offline Docs</span>
+        <span style="color: #71717a;">📚</span>
       </div>
       <div class="stat-value" id="stat-installed-docs">0</div>
-      <div class="stat-desc">Ready for zero-internet lookup</div>
+      <div class="stat-desc">Zero-internet dev packages</div>
     </div>
 
     <div class="card">
       <div class="stat-label">
-        <span>Mode</span>
-        <span>🔒</span>
+        <span>Enforcement</span>
+        <span style="color: var(--accent);">●</span>
       </div>
-      <div class="stat-value" style="color: var(--accent);">Offline</div>
-      <div class="stat-desc">Local Tauri + Rust + Python</div>
+      <div class="stat-value" style="color: #ffffff;">Human</div>
+      <div class="stat-desc">Tauri + Rust + Python sidecar</div>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <h3 style="color: var(--text-bright); margin-bottom: 0.75rem;">⚡ Quick Actions</h3>
-      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+      <h3 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.5rem;">Quick Actions</h3>
+      <p style="font-size: 0.85rem; color: #71717a; margin-bottom: 1rem;">Navigate through the offline toolsuite</p>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
         <button class="btn btn-primary btn-sm" onclick="switchTab('docs')">Browse Offline Docs</button>
-        <button class="btn btn-secondary btn-sm" onclick="switchTab('files')">Open Workspace Files</button>
-        <button class="btn btn-secondary btn-sm" onclick="switchTab('tracker')">Start Coding Timer</button>
+        <button class="btn btn-secondary btn-sm" onclick="switchTab('files')">Open Workspace</button>
+        <button class="btn btn-secondary btn-sm" onclick="switchTab('audit')">Ask Sarcastic Mentor</button>
+        <button class="btn btn-secondary btn-sm" onclick="switchTab('tracker')">Coding Timer</button>
       </div>
     </div>
     <div class="card">
-      <h3 style="color: var(--text-bright); margin-bottom: 0.75rem;">🛡️ Rule of Thumb Cap</h3>
-      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-        Current policy caps AI code generation to 0% and restricts AI to architectural planning and error guidance.
+      <h3 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 0.5rem;">Rule of Thumb Cap</h3>
+      <p style="font-size: 0.85rem; color: #71717a; margin-bottom: 1rem;">
+        Policy enforces 0% AI code generation. AI is strictly capped to high-level architecture planning and debugging questions.
       </p>
-      <span class="badge-pill" style="color: var(--accent); border-color: var(--accent); background: rgba(16, 185, 129, 0.1);">
-        STATUS: ENFORCING HUMAN CODING
+      <span class="badge-pill success">
+        STATUS: 100% HAND-CODED AUDIT TRAIL
       </span>
     </div>
   </div>
