@@ -41,6 +41,35 @@ def init_db():
             project_name TEXT
         );
     """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS typing_events (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            key_count INTEGER NOT NULL,
+            source TEXT
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS error_reports (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            raw_text TEXT NOT NULL,
+            match_json TEXT
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tasks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            title TEXT NOT NULL,
+            detail TEXT,
+            source TEXT,
+            status TEXT DEFAULT 'open'
+        );
+    """)
     
     conn.commit()
     conn.close()
