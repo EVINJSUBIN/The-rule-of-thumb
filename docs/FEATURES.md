@@ -1,149 +1,66 @@
-# The Rule of Thumb — Feature Plan
+# The Rule of Thumb — Feature Plan & Specification
 
-> Hack Club Phantom · 6 hours logged / 40 hours total · 34 hours remaining
-
----
-
-## Features Overview
-
-| # | Feature | Status | Priority |
-|---|---------|--------|----------|
-| F1 | Backend API (File Service) | 🟡 In Progress | P0 — Foundation |
-| F2 | Offline Docs (DevDocs Integration) | ⬜ Not Started | P0 — Core |
-| F3 | Sarcastic AI Mentor (No Coding, Only Guidance) | ⬜ Not Started | P1 — Core |
-| F4 | AI Usage Monitor (MCP/Skill for LLMs) | ⬜ Not Started | P1 — Core |
-| F5 | Code Time Tracker (VS Code Extension) | ⬜ Not Started | P1 — Critical |
-| F6 | Error Analyzer | ⬜ Not Started | P2 — Enhancement |
-| F7 | Dashboard UI | ⬜ Not Started | P2 — Enhancement |
+> **Hack Club Phantom Grant:** ~18.5 hours logged / 40 hours total (~46.2% completed)  
+> **Architecture Spec & Wiki:** [`docs/wiki/Home.md`](wiki/Home.md)  
+> **AI Usage Declaration:** [`docs/AI_DECLARATION.md`](AI_DECLARATION.md)
 
 ---
 
-## F1: Backend API (File Service)
+## Features Overview & Status
 
-**What:** Flask backend with proper routes for reading/writing project files, serving as the API layer for all other features.
-
-**Current state:** `main.py` has `/Analyze/<file_name>` (working) and `/Write/<file_path>` (incomplete, no POST body handling).
-
-**Plan:**
-- [ ] Reorganize into Flask blueprints (`app.py` + `routes/`)
-- [ ] Move hardcoded path to config
-- [ ] Fix `/Write` route — accept POST with file content
-- [ ] Add directory listing endpoint
-- [ ] Add SQLite database setup
-- [ ] Add error handling middleware
-
-**Hours estimate:** ~4h remaining (of 10h phase)
+| # | Feature | Status | Priority | Implementation Details |
+|---|---------|--------|----------|------------------------|
+| **F1** | **Backend Engine (Sidecar RPC)** | ✅ **Completed** | P0 — Foundation | Pure Python JSON-RPC engine (`backend/sidecar.py`). Zero open ports. File read/write/list with path safety. |
+| **F2** | **Offline Documentation Engine** | ✅ **Completed** | P0 — Core | DevDocs CDN sync (`index.json` + `db.json`). Category filtering, offline keyword search, and HTML viewer. |
+| **F3** | **Sarcastic AI Mentor** | ✅ **Completed** | P1 — Core | Interactive guidance interface that strictly refuses to generate code. Files tasks for the user to hand-code. |
+| **F4** | **AI Reliance Audit & Monitor** | ✅ **Completed** | P1 — Core | SQLite persistence (`ai_logs`). Audits tool calls, actions, and notes to enforce the one-third human rule. |
+| **F5** | **Offline Code Time Tracker** | ✅ **Completed** | P1 — Critical | Precision stopwatch timer logging to `coding_sessions` + live keystroke telemetry in `typing_events`. |
+| **F6** | **Traceback & Error Analyzer** | ✅ **Completed** | P2 — Enhancement | Parses stack traces and runtime exceptions, regex-matches tokens, and points to local DevDocs articles. |
+| **F7** | **Developer Console & IDE UI** | ✅ **Completed** | P2 — Enhancement | Dark minimalist React 18 + Vite + TypeScript dashboard with integrated Monaco code editor and v0 AI chat. |
 
 ---
 
-## F2: Offline Docs (DevDocs Integration)
+## Detailed Specifications
 
-**What:** Use freeCodeCamp's DevDocs as our documentation engine. It already works offline, has 400+ doc sets, and runs on port 9292. We just integrate it.
+### F1: Backend Engine & File System Bridge
+- **Engine:** Python sidecar invoked over stdin/CLI arguments via Rust `std::process::Command`.
+- **Capabilities:**
+  - `read(filename)`: Reads workspace files with UTF-8 decoding.
+  - `write(file_path, content)`: Writes content to disk with automated parent directory creation.
+  - `list(subpath)`: Traverses workspace hierarchy, excluding VCS, binary, and cache artifacts (`.git`, `node_modules`, `target`, `__pycache__`).
+  - `projects_add(name, tags)` / `projects_list()`: Scaffolds and tracks sub-projects with automatic git repository initialization.
 
-**Plan:**
-- [ ] Set up DevDocs via Docker (`docker-compose.yml`)
-- [ ] Download doc sets for key languages (Python, JavaScript, HTML, CSS, etc.)
-- [ ] Create Flask proxy/deep-link route (`/api/docs/search?q=...`)
-- [ ] Embed DevDocs in our frontend dashboard
-- [ ] Build a "suggest docs" endpoint that maps topics/errors to DevDocs URLs
+### F2: Offline Documentation Engine
+- **Source:** DevDocs CDN (`https://devdocs.io/docs.json`).
+- **Storage:** Local cached packages under `data/docs/<slug>/` (`index.json` + `db.json`).
+- **Search:**
+  - Tokenized keyword matching across API symbol names and document paths.
+  - Fast category and type filtering for massive API docsets (Python, Rust, SQLite, CSS, JavaScript).
+  - High-performance offline HTML rendering with embedded code block highlighting.
 
-**Hours estimate:** ~3h
+### F3: Sarcastic AI Mentor
+- **Core Principle:** **0% Code Generation**.
+- **Behavior:**
+  - When asked for implementation code, the mentor refuses, provides architectural logic, breaks the problem down into sequential steps, and files an actionable task.
+  - Keeps transcription context active across view navigations.
+  - Encourages hands-on keyboard typing and official documentation reading.
 
----
+### F4: AI Usage Monitor (One-Third Rule)
+- **Database:** SQLite (`data/ruleofthumb.db` -> `ai_logs` table).
+- **Schema:** `id`, `timestamp`, `tool_name`, `action`, `notes`.
+- **Policy Engine:** Evaluates ratio of AI interactions against active human coding seconds and keystrokes via `rule_of_thumb_decision` in `backend/logic.py`.
 
-## F3: Sarcastic AI Mentor
+### F5: Offline Coding Time Tracker
+- **Database:** `coding_sessions` table (`start_time`, `end_time`, `duration_seconds`, `project_name`).
+- **Telemetry:** `typing_events` table recording batches of active keystrokes.
+- **UI:** Precision stopwatch with start, pause, and stop & log actions. Live telemetry meter displaying active typing versus idle time.
 
-**What:** An AI that integrates into LLMs as a skill. It DOES NOT code for the user. It forces them to study architectures, principles, and logic. Then code themselves. It's sarcastic about it.
+### F6: Error Analyzer & Heuristic Matcher
+- **Database:** `error_reports` table (`raw_text`, `match_json`).
+- **Pattern Matcher:** Regular expression extractor scanning for exception types (`NameError`, `TypeError`, `OperationalError`), compiler codes (`E0255`), SQL keywords, and function invocations.
+- **Heuristic Ranking:** Scores candidates against installed docsets and deep-links directly to the relevant documentation section.
 
-**Plan:**
-- [ ] Design the mentor personality/prompt (sarcastic, refuses to write code)
-- [ ] Build mentor Flask endpoint (`/api/mentor/ask`)
-- [ ] Connect mentor to DevDocs — when user asks, mentor says "go read this page"
-- [ ] Track mentor interactions in SQLite (what was asked, what was suggested)
-- [ ] Add difficulty scaling — more sarcastic if user keeps asking for code
-
-**Hours estimate:** ~5h
-
----
-
-## F4: AI Usage Monitor (MCP/Skill)
-
-**What:** An MCP server that integrates into ALL LLMs. It monitors how much AI the user is using on their project, caps it, warns them, and logs everything. This skill is always active on the project.
-
-**Plan:**
-- [ ] Build MCP server skeleton (`mcp/server.py`)
-- [ ] Implement usage tracking — count requests, tokens, timestamps
-- [ ] Add configurable caps (max requests/hour, max tokens/day)
-- [ ] Warning system — alert user when approaching cap
-- [ ] Hard cap enforcement — block requests when over limit
-- [ ] Log all AI interactions to SQLite with project ID
-- [ ] Build audit query endpoints (`/api/audit/usage`, `/api/audit/project/<id>`)
-- [ ] Generate usage reports per project
-
-**Hours estimate:** ~7h
-
----
-
-## F5: Code Time Tracker (VS Code Extension)
-
-**What:** A reliable offline code time tracker that works across multiple projects. Like Hacktime but actually works offline in real time without glitches. Tracks every keystroke, file save, active window change.
-
-**Plan:**
-- [ ] Scaffold VS Code extension (`yo code`)
-- [ ] File watcher — detect file changes and saves
-- [ ] Keystroke listener — detect active coding vs idle
-- [ ] Project detection — which workspace/folder is active
-- [ ] SQLite offline storage — log sessions locally, no network needed
-- [ ] Multi-project support — separate time logs per project
-- [ ] Heartbeat system — ping every 2 minutes to track continuous coding
-- [ ] Flask sync endpoint (`/api/tracker/push`) — push sessions from extension
-- [ ] Dashboard query endpoint (`/api/tracker/hours?project=X&range=week`)
-- [ ] Daily/weekly summary calculations
-
-**Hours estimate:** ~10h
-
----
-
-## F6: Error Analyzer
-
-**What:** Catches errors from terminal/logs, categorizes them, and links to relevant DevDocs pages so user can learn to fix them.
-
-**Plan:**
-- [ ] Error input endpoint (`/api/errors/analyze`)
-- [ ] Error parser — extract error type, message, stack trace
-- [ ] Error categorization — syntax, runtime, import, type errors
-- [ ] DevDocs linker — match error type to relevant doc page
-- [ ] Error history — log analyzed errors in SQLite
-- [ ] Pattern detection — show user their most common mistakes
-
-**Hours estimate:** ~3h
-
----
-
-## F7: Dashboard UI
-
-**What:** A web frontend that wraps DevDocs + tracker + audit + mentor into one unified view.
-
-**Plan:**
-- [ ] HTML/CSS/JS dashboard layout
-- [ ] DevDocs panel (embedded)
-- [ ] Coding time display (daily/weekly/total hours)
-- [ ] AI usage audit panel (how much AI used per project)
-- [ ] Mentor chat interface
-- [ ] Error history panel
-
-**Hours estimate:** ~2h
-
----
-
-## Hour Budget (Updated)
-
-| Phase | Features | Hours | Running Total |
-|-------|----------|-------|---------------|
-| Already logged | Setup, ideation, initial `main.py` | 6h | 6h |
-| Phase 1: Foundation | F1 (Backend API) | 4h | 10h |
-| Phase 2: DevDocs | F2 (Offline Docs) | 3h | 13h |
-| Phase 3: AI Core | F3 (Mentor) + F4 (Monitor) | 12h | 25h |
-| Phase 4: Tracker | F5 (Code Time Tracker) | 10h | 35h |
-| Phase 5: Polish | F6 (Error Analyzer) + F7 (UI) | 5h | 40h |
-| **Total** | | **40h** | |
+### F7: Developer Console Dashboard
+- **Frontend Stack:** React 18, TypeScript, Tailwind CSS, Vite.
+- **Code Editor:** `@monaco-editor/react` embedded for editing workspace files.
+- **Aesthetic:** v0 and shadcn-inspired minimalist dark theme (`#09090b` zinc-950 base, `#171717` cards, `#262626` borders).
