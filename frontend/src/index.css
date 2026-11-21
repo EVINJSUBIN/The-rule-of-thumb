@@ -16,7 +16,7 @@
 
 body {
   margin: 0;
-  background-color: #09090b;
+  background-color: #1e1e1e;
   color: #d4d4d8;
   font-family: -apple-system, BlinkMacSystemFont, "Geist", "Inter", "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
@@ -33,4 +33,63 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #27272a;
   border-radius: 3px;
+}
+
+.doc-sheet h1,
+.doc-sheet h2,
+.doc-sheet h3 {
+  color: #f4f8ff;
+  font-weight: 650;
+  margin: 1.4rem 0 0.6rem;
+  letter-spacing: -0.03em;
+}
+
+.doc-sheet h1,
+.doc-sheet h1.fancy_title { font-size: 3rem; line-height: 1.05; color: #ffffff; }
+.doc-sheet h2 { font-size: 1.7rem; color: #9ec5ff; }
+.doc-sheet h3 { font-size: 1.25rem; color: #c5dcff; }
+.doc-sheet p,
+.doc-sheet li { color: #d5e4f7; line-height: 1.7; margin: 0.7rem 0; font-size: 1.05rem; }
+.doc-sheet a { color: #8eb7ff; text-decoration: underline; cursor: pointer; }
+.doc-sheet [id] { scroll-margin-top: 1rem; }
+.doc-sheet .yyterm,
+.doc-sheet b,
+.doc-sheet strong { color: #9ec5ff; font-weight: 700; }
+.doc-sheet pre,
+.doc-sheet code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.doc-sheet pre {
+  background: #06101c;
+  color: #d6e6ff;
+  padding: 1rem 1.1rem;
+  overflow: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(142, 183, 255, 0.25);
+}
+.doc-sheet code { font-size: 0.92em; color: #b7d4ff; }
+.doc-sheet svg.pikchr {
+  display: block;
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #06101c;
+  border-radius: 20px;
+  border: 1px solid rgba(142, 183, 255, 0.28);
+}
+.doc-sheet svg.pikchr .stroke {
+  fill: none;
+  stroke: #8eb7ff;
+  stroke-width: 2.16px;
+}
+.doc-sheet svg.pikchr .fill {
+  fill: #d7e8ff;
+  stroke: none;
+}
+.doc-sheet svg.pikchr text.fill {
+  fill: #f4f8ff;
+  stroke: none;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 650;
 }

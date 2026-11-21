@@ -12,6 +12,21 @@ declare global {
 
 export const hasTauri = typeof window !== 'undefined' && !!window.__TAURI__?.core
 
+const SIDECAR_COMMANDS: Record<string, string> = {
+  list_files: "list",
+  read_file: "read",
+  write_file: "write",
+}
+
+function sidecarPayload(args: Record<string, any>) {
+  const payload: Record<string, any> = {}
+  for (const [key, value] of Object.entries(args)) {
+    const snake = key.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
+    payload[snake] = value
+  }
+  return payload
+}
+
 export async function callBackend<T = any>(cmd: string, args: Record<string, any> = {}): Promise<T> {
   if (hasTauri && window.__TAURI__?.core) {
     try {
@@ -21,8 +36,22 @@ export async function callBackend<T = any>(cmd: string, args: Record<string, any
       console.error(`Tauri invoke [${cmd}] error:`, err)
       return { error: String(err) } as T
     }
-  } else {
-    // Web demo mocks
+  }
+
+  try {
+    const res = await fetch("/__sidecar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cmd: SIDECAR_COMMANDS[cmd] ?? cmd, payload: sidecarPayload(args) }),
+    })
+    if (res.ok) {
+      return await res.json()
+    }
+  } catch {
+    // Dev server sidecar is unavailable; fall through to the demo mocks.
+  }
+
+  {
     if (cmd === 'audit_stats') {
       return {
         total_ai_requests: 1,
@@ -35,6 +64,15 @@ export async function callBackend<T = any>(cmd: string, args: Record<string, any
     }
     if (cmd === 'docs_installed') {
       return { installed: ["sqlite"] } as T
+    }
+    if (cmd === 'session_record') {
+      const seconds = Number(args.durationSeconds ?? args.duration_seconds ?? 0)
+      return {
+        status: "ok",
+        duration_seconds: seconds,
+        project_name: args.projectName ?? args.project_name ?? "The Rule of Thumb",
+        message: "Coding session logged successfully"
+      } as T
     }
     if (cmd === 'list_files') {
       return {
